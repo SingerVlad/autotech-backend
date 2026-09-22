@@ -1,0 +1,36 @@
+{% extends 'taller/base.html' %}
+
+{% block content %}
+<div class="card shadow-sm col-md-8 mx-auto">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+        <h4 class="mb-0">Detalle Orden #{{ orden.id }}</h4>
+        <span class="badge bg-warning text-dark">{{ orden.get_estado_display }}</span>
+    </div>
+    <div class="card-body">
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <h6 class="text-muted">Datos del Vehículo:</h6>
+                <p class="mb-1"><strong>Patente:</strong> {{ orden.vehiculo.patente }}</p>
+                <p class="mb-1"><strong>Vehículo:</strong> {{ orden.vehiculo.modelo_referencia }} ({{ orden.vehiculo.anio }})</p>
+                <p class="mb-1"><strong>Cliente:</strong> {{ orden.vehiculo.cliente_nombre }}</p>
+                <p class="mb-1"><strong>Contacto:</strong> {{ orden.vehiculo.cliente_telefono }}</p>
+            </div>
+            <div class="col-sm-6">
+                <h6 class="text-muted">Detalles del Servicio:</h6>
+                <p class="mb-1"><strong>Servicio:</strong> {{ orden.servicio.nombre }}</p>
+                <p class="mb-1"><strong>Mano de Obra:</strong> ${{ orden.servicio.precio_base|floatformat:0 }}</p>
+                <p class="mb-1"><strong>Repuestos:</strong> ${{ orden.costo_repuestos|floatformat:0 }}</p>
+                <hr>
+                <p class="h5 text-success"><strong>Total a Pagar:</strong> ${{ orden.costo_total|floatformat:0 }}</p>
+            </div>
+        </div>
+        <div class="mb-3">
+            <h6 class="text-muted">Observaciones del Taller:</h6>
+            <div class="p-3 bg-light rounded border">
+                {{ orden.observaciones|default:"Sin observaciones registradas." }}
+            </div>
+        </div>
+        <a href="{% url 'taller:lista_ordenes' %}" class="btn btn-secondary">Volver al Listado</a>
+    </div>
+</div>
+{% endblock %}

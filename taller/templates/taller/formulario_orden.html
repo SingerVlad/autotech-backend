@@ -1,0 +1,50 @@
+{% extends 'taller/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="col-md-8 mx-auto">
+    <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+            <h4 class="mb-0">Generar Orden de Trabajo</h4>
+        </div>
+        <div class="card-body">
+            <form method="post" id="orden-form">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="mt-4 d-flex justify-content-end gap-2">
+                    <a href="{% url 'taller:lista_ordenes' %}" class="btn btn-outline-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-success">Guardar Orden</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const marcaSelect = document.getElementById('id_marca');
+    const modeloSelect = document.getElementById('id_modelo');
+
+    function actualizarModelos() {
+        const marcaId = marcaSelect.value;
+        modeloSelect.innerHTML = '<option value="">- Seleccione un Modelo -</option>';
+
+        if (!marcaId) return;
+
+        fetch(`{% url 'taller:api_modelos' %}?marca_id=${marcaId}`)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item.id;
+                    option.textContent = item.nombre;
+                    modeloSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error al cargar modelos:', error));
+    }
+
+    marcaSelect.addEventListener('change', actualizarModelos);
+});
+</script>
+{% endblock %}
