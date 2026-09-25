@@ -1,6 +1,6 @@
 # AutoTech Management - Sistema de Gestión de Taller Mecánico
 
-Backend desarrollado en **Django** conectado a una base de datos relacional en la nube (**PostgreSQL en Neon.tech**), con persistencia en tiempo real y control de versiones en GitHub.
+Backend desarrollado en **Django** desacoplado de almacenamiento local y conectado a una base de datos relacional en la nube (**PostgreSQL en Neon.tech**), con persistencia remota de datos en tiempo real y control de versiones en GitHub.
 
 ---
 
@@ -11,9 +11,11 @@ Backend desarrollado en **Django** conectado a una base de datos relacional en l
 
 ---
 
-## 2. Puesta en Marcha Local
+## 2. Requisitos Previos e Instalación
 
-1. Abrir la carpeta del proyecto en **Visual Studio Code**.
-2. Abrir una terminal integrada y activar el entorno virtual:
-   ```powershell
-   .\.venv\Scripts\Activate
+Para clonar y poner en marcha el proyecto localmente desde cero:
+
+### 1. Clonar el repositorio
+```bash
+git clone https://github.com/SingerVlad/autotech-backend.git
+cd autotech-backend
